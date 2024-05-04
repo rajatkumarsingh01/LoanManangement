@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "760835607782",
+    "project_id": "loan-application-ec9a6",
+    "storage_bucket": "loan-application-ec9a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760835607782:android:8a59560248631a56c8bf27",
+        "android_client_info": {
+          "package_name": "com.task.loanapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIP3dhz46M8NMNkPbZ7X_e6geMDMxyQ_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
