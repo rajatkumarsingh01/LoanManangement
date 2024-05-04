@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class MainViewModel: ViewModel() {
 
-    var registerInProgress = mutableStateOf(false)
     var uploadProgress= mutableStateOf(false)
 
     private var _selectedLoan = MutableStateFlow("")
@@ -73,7 +72,6 @@ class MainViewModel: ViewModel() {
     }
 
     fun registerUserInfo(user: User) {
-        registerInProgress.value=true
         val currentUser = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         val database = Firebase.database
         val usersRef = database.getReference("users")
@@ -82,7 +80,7 @@ class MainViewModel: ViewModel() {
             .addOnSuccessListener {
                 // Data successfully written
                 Log.d("Inside_registeration", "data written successfully ")
-                registerInProgress.value=false
+
             }
             .addOnFailureListener {
                 // Failed to write data
@@ -99,8 +97,13 @@ class MainViewModel: ViewModel() {
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
-                Log.d("inside_get_userData", "data fetched successfully ")
-                userData.value = user!!
+                if (user != null) {
+                    Log.d("inside_get_userData", "data fetched successfully ")
+                    userData.value = user!!
+                } else {
+                    Log.e("getUserData", "User data is null")
+                    // Handle the case where user data is null, perhaps by setting a default user or showing an error
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

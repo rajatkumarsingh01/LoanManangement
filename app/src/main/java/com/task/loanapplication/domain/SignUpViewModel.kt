@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.task.loanapplication.data.util.RegistrationUIState
 import com.task.loanapplication.data.util.UIEvent
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class SignUpViewModel:ViewModel() {
     var registrationUIState= mutableStateOf(RegistrationUIState())
@@ -16,6 +17,9 @@ class SignUpViewModel:ViewModel() {
     var errorMessage by mutableStateOf("")
     var signUpInProgress = mutableStateOf(false)
     var logInProgress= mutableStateOf(false)
+
+    private val _loginSuccess =MutableStateFlow(false)
+    val loginSuccess get() = _loginSuccess
 
 
     fun onEvent(event:UIEvent) {
@@ -98,12 +102,12 @@ class SignUpViewModel:ViewModel() {
             errorMessage = "Email and password cannot be empty"
             return
         }
-
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 logInProgress.value=true
                 if (task.isSuccessful) {
                     Log.d("login_success","LogIn successful ")
+                    _loginSuccess.value = true
                     logInProgress.value=false
                     navigateToHomeScreen= true
                 } else {

@@ -62,13 +62,19 @@ fun UploadDocumentsScreen(
                 // Upload Button
                 Button(
                     onClick = {
-                        viewModel.uploadDocument("AadharCard", aadharUri)
-                        viewModel.uploadDocument("PANCard", panUri)
-                        viewModel.uploadDocument("BankingStatement", bankingStatementUri)
-                        viewModel.uploadDocument("License", licenseUri)
-                        viewModel.uploadDocument("ElectricBill", electricBillUri)
-                        onUploadComplete()
-                        showToast(localContext , "Documents uploaded successfully")
+                            if (aadharUri != null && panUri != null && bankingStatementUri != null &&
+                                licenseUri != null && electricBillUri != null
+                            ) {
+                                viewModel.uploadDocument("AadharCard", aadharUri)
+                                viewModel.uploadDocument("PANCard", panUri)
+                                viewModel.uploadDocument("BankingStatement", bankingStatementUri)
+                                viewModel.uploadDocument("License", licenseUri)
+                                viewModel.uploadDocument("ElectricBill", electricBillUri)
+                                onUploadComplete()
+                                showToast(localContext, "Documents uploaded successfully")
+                            }else{
+                                showToast(localContext, "Please upload all documents")
+                            }
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {

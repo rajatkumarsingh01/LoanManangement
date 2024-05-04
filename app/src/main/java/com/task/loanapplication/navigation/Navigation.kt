@@ -39,7 +39,7 @@ fun NavigationForApp(
                if (signUpViewModel.navigateToHomeScreen){
                    navHostController.navigate("home")
                }else{
-                   LoginScreen(signUpViewModel = signUpViewModel,
+                   LoginScreen(signUpViewModel = signUpViewModel, viewModel = MainViewModel(),
                        onRegisterClick = {
                        navHostController.navigate("signup")
                    })

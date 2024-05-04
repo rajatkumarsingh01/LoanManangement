@@ -12,11 +12,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -64,7 +65,7 @@ fun SignUpScreen(
     ) {
 
 
-        Text(text = "Please signUp ",
+        Text(text = "Please signUp Here ",
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(),
@@ -105,7 +106,8 @@ fun SignUpScreen(
             onClick = {
                 signUpViewModel.onEvent(UIEvent.registrationButton)
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
         ) {
             Text(text = "SignUp")
         }
@@ -150,7 +152,7 @@ fun MyTextField(labelValue:String, imageVector: ImageVector,
         },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Person,
+                imageVector = Icons.Default.Email,
                 contentDescription = "Icon"
             )
         },
@@ -196,12 +198,14 @@ fun MyPasswordField(
         },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Person,
+                imageVector = Icons.Default.Lock,
                 contentDescription = "Icon"
             )
         },
         trailingIcon = {
-            val iconImage=if ( passwordVisible.value) Icons.Filled.Check else Icons.Filled.Clear
+            val iconImage = if (passwordVisible.value) Icons.Filled.ThumbUp else Icons.Filled.Clear
+
+
             var description=if(passwordVisible.value){
                 stringResource(id = R.string.hide_password)
             }else{
