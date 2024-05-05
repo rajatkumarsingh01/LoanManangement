@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -33,11 +34,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.task.loanapplication.domain.MainViewModel
 import java.io.InputStream
 
@@ -60,6 +66,9 @@ fun UploadDocumentsScreen(
         bottomBar = {
             Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 // Upload Button
+                if (viewModel.uploadProgress.value) {
+                    CircularProgressIndicator()
+                }
                 Button(
                     onClick = {
                             if (aadharUri != null && panUri != null && bankingStatementUri != null &&
@@ -77,12 +86,18 @@ fun UploadDocumentsScreen(
                             }
                     },
                     modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "Upload Files")
-                }
+                        .padding(bottom = 16.dp)
+                    ,
+                    colors = ButtonDefaults.buttonColors(containerColor =Color(0xFF008000))
 
-                if (viewModel.uploadProgress.value) {
-                    CircularProgressIndicator()
+                ) {
+                    Text(text = "Upload Files",
+                        style = TextStyle(
+                            fontSize = 18.sp, // Change font size
+                            color = Color.White, // Change text color
+                            fontWeight = FontWeight.Bold)
+                    )
+
                 }
             }
         }
@@ -104,6 +119,7 @@ fun UploadDocumentsScreen(
             // Info Text
             Text(
                 text = "Upload the following documents:",
+                color = Color(0xFF008000),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -212,14 +228,21 @@ fun DocumentUploadView(
         // Upload Button
         OutlinedButton(
             onClick = { launcher.launch("image/*") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = if (documentUri != null) "Change Document" else "Upload Document")
-        }
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor =Color.Green)
 
+
+        ) {
+            Text(text = if (documentUri != null) "Change Document" else "Upload Document",
+                style = TextStyle(
+                    fontSize = 18.sp, // Change font size
+                    color = Color.Black, // Change text color
+                    fontWeight = FontWeight.Bold)
+            )
+
+        }
         // Selected Document Preview
         if (documentUri != null) {
-
             documentUri.let { uri ->
                 val context = LocalContext.current
                 val bitmap = loadBitmapFromUri(context, uri)
@@ -239,3 +262,8 @@ fun DocumentUploadView(
 
 }
 
+@Preview
+@Composable
+private fun UploadDocumentsScreen() {
+    UploadDocumentsScreen(viewModel = MainViewModel(), onUploadComplete = {})
+}

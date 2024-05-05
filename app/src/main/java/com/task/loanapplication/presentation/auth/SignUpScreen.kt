@@ -71,15 +71,15 @@ fun SignUpScreen(
         Text(
             text = "Please SignUp Here",
             textAlign = TextAlign.Center,
-            color = Color.Black,
-            fontWeight = FontWeight(500),
+            color = Color(0xFF008000),
+            fontWeight = FontWeight(450),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 24.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
 
         Image(
-            painter = painterResource(id = R.drawable.login), // Replace R.drawable.your_svg_icon with your SVG icon resource
+            painter = painterResource(id = R.drawable.login),
             contentDescription = "Your Icon",
             modifier = Modifier.size(200.dp) // Adjust size as needed
         )
@@ -106,8 +106,7 @@ fun SignUpScreen(
             },
         )
 
-
-        Spacer(modifier = Modifier.height(78.dp))
+        Spacer(modifier = Modifier.height(60.dp))
 
         // Register Button
         OutlinedButton(
@@ -115,12 +114,12 @@ fun SignUpScreen(
                 signUpViewModel.onEvent(UIEvent.registrationButton)
             },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
+            colors = ButtonDefaults.buttonColors(containerColor =   Color(0xFF008000))
         ) {
             Text(text = "SignUp",
                 style = TextStyle(
                     fontSize = 18.sp, // Change font size
-                    color = Color.Black, // Change text color
+                    color = Color.White, // Change text color
                     fontWeight = FontWeight.Bold // C
                 )
             )

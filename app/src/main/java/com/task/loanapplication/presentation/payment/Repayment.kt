@@ -1,9 +1,12 @@
 package com.task.loanapplication.presentation.payment
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
-import android.telephony.SmsManager
-import android.util.Log
+import android.content.Context.NOTIFICATION_SERVICE
+import android.os.Build
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -27,14 +31,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.task.loanapplication.R
 import com.task.loanapplication.domain.MainViewModel
 
 @Composable
@@ -64,21 +71,23 @@ fun RepaymentOptionScreen(
                 Spacer(modifier = Modifier.weight(1f))
                 // Confirm button
                 Button(
-                    modifier = Modifier.weight(0.5f)
-                        .padding(bottom = 22.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = 24.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000)),
                     onClick = {
                         if (isChecked){
+                            sendNotification(localContext)
                             navController.navigate("payment/qr_code")
-                            sendSMS(localContext,phoneNumber, "Your loan repayment has been confirmed.")
-//                          showToast(localContext,"SMS sent !")
+
+                         showToast(localContext,"SMS sent !")
                         }
                     }
                 ) {
                     Text(text = "Confirm",
                         style = TextStyle(
                             fontSize = 18.sp, // Change font size
-                            color = Color.Black, // Change text color
+                            color = Color.White, // Change text color
                             fontWeight = FontWeight.Bold // C
                         )
                         )
@@ -98,12 +107,18 @@ fun RepaymentOptionScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.loanicon),
+                contentDescription = "Image",
+                modifier = Modifier.size(120.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             // Info message
             Text(
                 text = "Reschedule payment & timing",
                 textAlign = TextAlign.Center,
-                color = Color.Green,
-                fontWeight = FontWeight(500),
+                color = Color(0xFF008000),
+                fontWeight = FontWeight(400),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
@@ -152,16 +167,31 @@ fun RepaymentOptionScreen(
     }
 }
 
-fun sendSMS(context: Context, phoneNumber: String, message: String) {
-    try {
-        val smsManager = SmsManager.getDefault()
-        smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-        showToast(context, "SMS sent!")
-    } catch (e: Exception) {
-        Log.e("sendSMS", "Error sending SMS: ${e.message}")
-        showToast(context, "Failed to send SMS")
+private const val CHANNEL_ID = "com.example.notification.channel"
+// Notification ID
+private const val NOTIFICATION_ID = 123 // You can use any unique integer value
+// Function to send notification
+fun sendNotification(context: Context) {
+    // Create NotificationManager instance
+    val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
+    // Create notification channel (required for Android Oreo and above)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            "Notification Channel",
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        notificationManager.createNotificationChannel(channel)
     }
+    // Build the notification
+    val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        .setContentTitle("Saudagar Trading & Company ")
+        .setContentText("Your loan repayment has been confirmed.")
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+    // You can add more configurations like actions, intent, etc.
+    // Show the notification
+    notificationManager.notify(NOTIFICATION_ID, builder.build())
 }
 
 
@@ -174,3 +204,4 @@ fun showToast(context: Context, message: String) {
 private fun PreviewRepaymentOptionScreen() {
     RepaymentOptionScreen(viewModel = MainViewModel(), rememberNavController())
 }
+

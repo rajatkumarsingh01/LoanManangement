@@ -40,12 +40,12 @@ fun QRCodeScreen(
                 Spacer(modifier = Modifier.weight(0.6f))
                 // Cancel button
                 OutlinedButton(
-                    modifier = Modifier.weight(0.5f),
+                    modifier = Modifier.weight(1f),
                     onClick = onCancelClick
                 ) {
                     Text(text = "Cancel",
                         style = TextStyle(
-                            fontSize = 18.sp, // Change font size
+                            fontSize = 16.sp, // Change font size
                             color = Color.Black, // Change text color
                             fontWeight = FontWeight.Bold // C
                         ))
@@ -53,14 +53,14 @@ fun QRCodeScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 // Done button
                 Button(
-                    modifier = Modifier.weight(0.5f),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000)),
                     onClick = onDoneClick
                 ) {
                     Text(text = "Done",
                         style = TextStyle(
                             fontSize = 18.sp, // Change font size
-                            color = Color.Black, // Change text color
+                            color = Color.White, // Change text color
                             fontWeight = FontWeight.Bold // C
                         )
                         )
@@ -81,11 +81,19 @@ fun QRCodeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            Image(
+                painter = painterResource(id = R.drawable.payment),
+                contentDescription = "Your Icon",
+                modifier = Modifier.size(150.dp)// Adjust size as needed
+            )
+
+           Spacer(modifier = Modifier.height(8.dp))
+
             Text(
                 text = "Complete Payment",
                 textAlign = TextAlign.Center,
-                color = Color.Green,
-                fontWeight = FontWeight(500),
+                color = Color(0xFF008000),
+                fontWeight = FontWeight(400),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 12.dp)
             )

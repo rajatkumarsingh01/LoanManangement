@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -38,9 +39,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.task.loanapplication.data.util.User
 import com.task.loanapplication.domain.MainViewModel
 
@@ -250,12 +256,23 @@ fun RegistrationScreen(
                     showToast(localContext,"Please fill all the fields")
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor =Color(0xFF008000))
         ) {
-            Text(text = "Submit")
+            Text(text = "Submit",
+                style = TextStyle(
+                    fontSize = 18.sp, // Change font size
+                    color = Color.Black, // Change text color
+                    fontWeight = FontWeight.Bold))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
+@Preview
+@Composable
+private fun PreviewRegistrationScreen() {
+    RegistrationScreen(navController = rememberNavController(), viewModel = MainViewModel())
+    
+}

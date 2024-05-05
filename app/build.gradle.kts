@@ -78,6 +78,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-storage")
 
+    implementation ("com.google.firebase:firebase-messaging:24.0.0")
+
+
     implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 

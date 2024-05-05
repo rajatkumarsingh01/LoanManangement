@@ -3,6 +3,7 @@ package com.task.loanapplication.presentation.home
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,9 +27,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.task.loanapplication.R
 import com.task.loanapplication.domain.SignUpViewModel
 
@@ -40,6 +43,7 @@ val localContext= LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = Color.White)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -50,21 +54,13 @@ val localContext= LocalContext.current
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-
-        Text(
-            text = "Loan Management",
-            textAlign = TextAlign.Center,
-            color = Color.DarkGray,
-            fontWeight = FontWeight(500),
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 12.dp)
-        )
         Image(
             painter = painterResource(id = R.drawable.loanicon),
             contentDescription = "Image",
             modifier = Modifier.size(100.dp)
         )
 
+        Spacer(modifier =Modifier.height(12.dp))
 
         OptionButton(text = "Profile") {
             navController.navigate("home/user_profile")
@@ -90,13 +86,16 @@ val localContext= LocalContext.current
                 navController.navigate("auth/login")
                 showToast(localContext,"SignOut Successful")
                },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Cyan)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 16.dp)
+            ,
+            colors = ButtonDefaults.buttonColors(containerColor =   Color(0xFF008000))
         ) {
             Text("Logout",
                 style = TextStyle(
                     fontSize = 18.sp, // Change font size
-                    color = Color.Black, // Change text color
+                    color = Color.White, // Change text color
                     fontWeight = FontWeight.Bold // Change font weight
                 )
                 )
@@ -125,3 +124,8 @@ fun OptionButton(text: String, onClick: () -> Unit) {
     }
 }
 
+@Preview
+@Composable
+private fun PreviewHomeScreen() {
+    HomeScreen(navController = rememberNavController(), signUpViewModel = SignUpViewModel() )
+}

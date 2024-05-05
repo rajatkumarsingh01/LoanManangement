@@ -1,13 +1,17 @@
 package com.task.loanapplication.presentation.auth
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -21,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -44,29 +49,53 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
             .background(color = Color.White)
+            .padding(16.dp)
+
         ,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Welcome to Saudagar Trading & Company",
-            textAlign = TextAlign.Center,
-            color = Color.Green,
-            fontWeight = FontWeight(700),
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Image(
+                painter = painterResource(id = R.drawable.applogo),
+                contentDescription = "App Logo",
+                modifier = Modifier.size(90.dp) // Adjust size as needed
+            )
+            Column {
+                Text(
+                    text = "Saudagar Trading & Company",
+                    textAlign = TextAlign.Center,
+                    color = Color(0xFF008000),
+                    fontWeight = FontWeight(300),
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Text(
+                    text = "Helping the Needy",
+                    textAlign = TextAlign.Center,
+                    color = Color(0xFF008000),
+                    fontWeight = FontWeight(700),
+                    fontSize = 18.sp,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 10.dp, start = 18.dp)
+                )
+            }
+        }
+              Spacer(modifier = Modifier.height(20.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.loanicon),
+            contentDescription = "Image",
+            modifier = Modifier.size(120.dp)
         )
 
-        Text(
-            text = "Loan Management",
-            textAlign = TextAlign.Center,
-            color = Color.DarkGray,
-            fontWeight = FontWeight(400),
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
 
         // Username Field
         MyTextField(
@@ -96,12 +125,13 @@ fun LoginScreen(
                 signUpViewModel.onEvent(UIEvent.loginButton)
             },
             modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
+                    colors = ButtonDefaults.buttonColors(containerColor =   Color(0xFF008000)),
+            border = BorderStroke(2.dp, color = Color.Gray)
         ) {
             Text(text = "Login",
                 style = TextStyle(
                     fontSize = 18.sp, // Change font size
-                    color = Color.Black, // Change text color
+                    color = Color.White, // Change text color
                     fontWeight = FontWeight.Bold // C
                 )
             )
