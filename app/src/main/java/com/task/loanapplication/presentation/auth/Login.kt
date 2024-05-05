@@ -28,13 +28,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.task.loanapplication.R
 import com.task.loanapplication.data.util.UIEvent
 import com.task.loanapplication.domain.MainViewModel
 import com.task.loanapplication.domain.SignUpViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
@@ -96,20 +94,6 @@ fun LoginScreen(
         Button(
             onClick = {
                 signUpViewModel.onEvent(UIEvent.loginButton)
-                viewModel.viewModelScope.launch {
-                    signUpViewModel.loginSuccess.collect { success ->
-                        if (success) {
-                            // Once login is successful, fetch user data
-                            val userData = viewModel.getUserData().value
-                            // Update user data in ViewModel
-                            userData?.let {
-                                // Update user data in ViewModel
-                                viewModel.updateUserData(it)
-                            }
-                            }
-                        }
-                    }
-
             },
             modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Green)

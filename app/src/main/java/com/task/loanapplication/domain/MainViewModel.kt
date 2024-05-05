@@ -3,8 +3,6 @@ package com.task.loanapplication.domain
 import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -80,7 +78,6 @@ class MainViewModel: ViewModel() {
             .addOnSuccessListener {
                 // Data successfully written
                 Log.d("Inside_registeration", "data written successfully ")
-
             }
             .addOnFailureListener {
                 // Failed to write data
@@ -88,28 +85,27 @@ class MainViewModel: ViewModel() {
 
     }
 
-    fun getUserData(): LiveData<User> {
+    fun getUserData() {
         val currentUser = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         val database = Firebase.database
         val usersRef = database.getReference("users").child(currentUser)
-        val userData = MutableLiveData<User>()
+        //  val userData = MutableLiveData<User>()
 
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
                 if (user != null) {
                     Log.d("inside_get_userData", "data fetched successfully ")
-                    userData.value = user!!
+                    _userData.value = user!!
                 } else {
                     Log.e("getUserData", "User data is null")
                     // Handle the case where user data is null, perhaps by setting a default user or showing an error
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.e("get_UserData", "Error fetching user data: ${error.message}")
             }
         })
-        return userData
+
     }
 }

@@ -1,5 +1,7 @@
 package com.task.loanapplication.presentation.home
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,20 +21,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.task.loanapplication.R
+import com.task.loanapplication.domain.SignUpViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
-
+fun HomeScreen(navController: NavController,
+               signUpViewModel: SignUpViewModel
+               ) {
+val localContext= LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,7 +85,11 @@ fun HomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(40.dp))
 
         OutlinedButton(
-            onClick = { navController.navigate("auth/login");var inclusive = true},
+            onClick = {
+                signUpViewModel.signOut()
+                navController.navigate("auth/login")
+                showToast(localContext,"SignOut Successful")
+               },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Cyan)
         ) {
@@ -96,6 +104,9 @@ fun HomeScreen(navController: NavController) {
     }
 }
 
+fun showToast(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
 @Composable
 fun OptionButton(text: String, onClick: () -> Unit) {
     Button(
@@ -114,8 +125,3 @@ fun OptionButton(text: String, onClick: () -> Unit) {
     }
 }
 
-@Preview
-@Composable
-private fun PreviewHomeScreen() {
-    HomeScreen(navController= rememberNavController())
-}

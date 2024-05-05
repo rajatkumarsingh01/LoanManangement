@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -24,14 +25,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.task.loanapplication.domain.MainViewModel
 
 @Composable
 fun RepaymentOptionScreen(
     viewModel: MainViewModel,
-    onConfirmClick: () -> Unit
+    navController: NavController
 
 ) {
     val userData by viewModel.userData.collectAsState()
@@ -55,15 +64,24 @@ fun RepaymentOptionScreen(
                 Spacer(modifier = Modifier.weight(1f))
                 // Confirm button
                 Button(
-                    modifier = Modifier.weight(0.5f),
+                    modifier = Modifier.weight(0.5f)
+                        .padding(bottom = 22.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
                     onClick = {
                         if (isChecked){
+                            navController.navigate("payment/qr_code")
                             sendSMS(localContext,phoneNumber, "Your loan repayment has been confirmed.")
 //                          showToast(localContext,"SMS sent !")
                         }
                     }
                 ) {
-                    Text(text = "Confirm")
+                    Text(text = "Confirm",
+                        style = TextStyle(
+                            fontSize = 18.sp, // Change font size
+                            color = Color.Black, // Change text color
+                            fontWeight = FontWeight.Bold // C
+                        )
+                        )
                 }
             }
         }
@@ -82,9 +100,12 @@ fun RepaymentOptionScreen(
         ) {
             // Info message
             Text(
-                text = "Repayment Schedule and Timing",
+                text = "Reschedule payment & timing",
+                textAlign = TextAlign.Center,
+                color = Color.Green,
+                fontWeight = FontWeight(500),
                 style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(bottom = 28.dp)
+                modifier = Modifier.padding(bottom = 24.dp)
             )
             // Duration input field
             Text(
@@ -118,6 +139,7 @@ fun RepaymentOptionScreen(
                     checked = isChecked,
                     onCheckedChange = { isChecked = it },
                     modifier = Modifier.padding(end = 8.dp)
+
                 )
                 Text(
                     text = "I hereby agree to receive SMS from the application",
@@ -138,6 +160,7 @@ fun sendSMS(context: Context, phoneNumber: String, message: String) {
     } catch (e: Exception) {
         Log.e("sendSMS", "Error sending SMS: ${e.message}")
         showToast(context, "Failed to send SMS")
+
     }
 }
 
@@ -146,3 +169,8 @@ fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
+@Preview
+@Composable
+private fun PreviewRepaymentOptionScreen() {
+    RepaymentOptionScreen(viewModel = MainViewModel(), rememberNavController())
+}

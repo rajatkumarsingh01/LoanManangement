@@ -10,30 +10,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.task.loanapplication.R
 
 @Composable
@@ -47,18 +40,30 @@ fun QRCodeScreen(
                 Spacer(modifier = Modifier.weight(0.6f))
                 // Cancel button
                 OutlinedButton(
-                    modifier = Modifier.weight(0.4f),
+                    modifier = Modifier.weight(0.5f),
                     onClick = onCancelClick
                 ) {
-                    Text(text = "Cancel")
+                    Text(text = "Cancel",
+                        style = TextStyle(
+                            fontSize = 18.sp, // Change font size
+                            color = Color.Black, // Change text color
+                            fontWeight = FontWeight.Bold // C
+                        ))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 // Done button
                 Button(
-                    modifier = Modifier.weight(0.4f),
+                    modifier = Modifier.weight(0.5f),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
                     onClick = onDoneClick
                 ) {
-                    Text(text = "Done")
+                    Text(text = "Done",
+                        style = TextStyle(
+                            fontSize = 18.sp, // Change font size
+                            color = Color.Black, // Change text color
+                            fontWeight = FontWeight.Bold // C
+                        )
+                        )
                 }
             }
         }
@@ -75,6 +80,15 @@ fun QRCodeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            Text(
+                text = "Complete Payment",
+                textAlign = TextAlign.Center,
+                color = Color.Green,
+                fontWeight = FontWeight(500),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
             // Info text
             Text(
                 text = "Download to scan this QR for daily payment",

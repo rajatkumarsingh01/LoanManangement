@@ -24,7 +24,6 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -38,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -50,6 +50,7 @@ fun RegistrationScreen(
     viewModel: MainViewModel,
     navController: NavController
 ) {
+    val localContext= LocalContext.current
     var userName by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
@@ -219,27 +220,40 @@ fun RegistrationScreen(
         // Register Button
         Button(
             onClick = {
-             val user= User(
-                 userName = userName,
-                 phoneNo = phoneNumber,
-                 address = address,
-                 panNumber = panNumber,
-                 aadharNumber = mobileNo,
-                 electricBillNo = electricBillNo,
-                 bankName = bankingStatementAct,
-                 accountNumber = bankingStatementAct, // Assuming this is correct, please correct if needed
-                 accountIFSC = bankingStatementAct, // Assuming this is correct, please correct if needed
-                 taxReceiptNumber = housingReciptNo
-             );
-                viewModel.registerUserInfo(user)
-                navController.navigate("auth/upload_docs")
-                viewModel.updateUserData(user)
+                if (userName.isNotBlank() &&
+                    phoneNumber.isNotBlank() &&
+                    address.isNotBlank() &&
+                    panNumber.isNotBlank() &&
+                    mobileNo.isNotBlank() &&
+                    electricBillNo.isNotBlank() &&
+                    bankingStatementAct.isNotBlank() &&
+                    accountNumber.isNotBlank() &&
+                    accountIFSC.isNotBlank() &&
+                    housingReciptNo.isNotBlank())
+                {
+                    val user= User(
+                        userName = userName,
+                        phoneNo = phoneNumber,
+                        address = address,
+                        panNumber = panNumber,
+                        aadharNumber = mobileNo,
+                        electricBillNo = electricBillNo,
+                        bankName = bankingStatementAct,
+                        accountNumber = bankingStatementAct, // Assuming this is correct, please correct if needed
+                        accountIFSC = bankingStatementAct, // Assuming this is correct, please correct if needed
+                        taxReceiptNumber = housingReciptNo
+                    );
+                    viewModel.registerUserInfo(user)
+                    navController.navigate("auth/upload_docs")
+                    viewModel.updateUserData(user)
+                }else{
+                    showToast(localContext,"Please fill all the fields")
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Submit")
         }
-
 
         Spacer(modifier = Modifier.height(16.dp))
     }

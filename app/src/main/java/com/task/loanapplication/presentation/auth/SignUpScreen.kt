@@ -1,13 +1,14 @@
 package com.task.loanapplication.presentation.auth
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,6 +22,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -33,9 +35,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -56,6 +58,7 @@ fun SignUpScreen(
     signUpViewModel: SignUpViewModel = viewModel(),
     onRegisterClick: () -> Unit
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,17 +68,22 @@ fun SignUpScreen(
     ) {
 
 
-        Text(text = "Please signUp Here ",
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(),
-            style = TextStyle(
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Normal
-            ),
-            textAlign = TextAlign.Center
-            )
+        Text(
+            text = "Please SignUp Here",
+            textAlign = TextAlign.Center,
+            color = Color.Black,
+            fontWeight = FontWeight(500),
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.login), // Replace R.drawable.your_svg_icon with your SVG icon resource
+            contentDescription = "Your Icon",
+            modifier = Modifier.size(200.dp) // Adjust size as needed
+        )
+
 
         Spacer(modifier = Modifier.height(16.dp))
         // Username Field
@@ -109,7 +117,13 @@ fun SignUpScreen(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
         ) {
-            Text(text = "SignUp")
+            Text(text = "SignUp",
+                style = TextStyle(
+                    fontSize = 18.sp, // Change font size
+                    color = Color.Black, // Change text color
+                    fontWeight = FontWeight.Bold // C
+                )
+            )
         }
 
         if (signUpViewModel.signUpInProgress.value){

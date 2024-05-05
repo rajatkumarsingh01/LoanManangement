@@ -78,7 +78,7 @@ fun UploadDocumentsScreen(
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "Upload Documents")
+                    Text(text = "Upload Files")
                 }
 
                 if (viewModel.uploadProgress.value) {

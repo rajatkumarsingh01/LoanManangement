@@ -38,6 +38,7 @@ fun NavigationForApp(
             composable("auth/login") {
                if (signUpViewModel.navigateToHomeScreen){
                    navHostController.navigate("home")
+                   signUpViewModel.navigateToHomeScreen=false
                }else{
                    LoginScreen(signUpViewModel = signUpViewModel, viewModel = MainViewModel(),
                        onRegisterClick = {
@@ -50,6 +51,7 @@ fun NavigationForApp(
             composable("signup") {
                 if (signUpViewModel.navigateToRegistration) {
                     navHostController.navigate("auth/register")
+                    signUpViewModel.navigateToRegistration=false
                 } else {
                     SignUpScreen(
                         signUpViewModel = signUpViewModel,
@@ -81,16 +83,15 @@ fun NavigationForApp(
         }
         navigation(startDestination = "payment/repayment", route = "payment") {
             composable("payment/repayment") {
-                RepaymentOptionScreen (viewModel = viewModel){
-                    navHostController.navigate("payment/qr_code")
-                }
+                RepaymentOptionScreen (viewModel,navHostController)
             }
             composable("payment/qr_code") {
                 QRCodeScreen(onDoneClick = {
                     navHostController.navigate("home")
-                }) {
-                    navHostController.popBackStack()
-                }
+                },
+                    onCancelClick = {
+                        navHostController.popBackStack()
+                    })
             }
         }
         navigation(startDestination = "details/pay_conform", route = "details") {
@@ -113,7 +114,7 @@ fun NavigationForApp(
         // after login
         navigation(startDestination = "home/options", route = "home") {
             composable("home/options") {
-                HomeScreen(navController = navHostController)
+                HomeScreen(navController = navHostController,signUpViewModel=signUpViewModel)
             }
             composable("home/repayment_schedule") {
                 RepaymentScheduleScreen(repaymentSchedule = getListOfSchedulePayment()) {

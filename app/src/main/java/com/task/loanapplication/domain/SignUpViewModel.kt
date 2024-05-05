@@ -21,7 +21,6 @@ class SignUpViewModel:ViewModel() {
     private val _loginSuccess =MutableStateFlow(false)
     val loginSuccess get() = _loginSuccess
 
-
     fun onEvent(event:UIEvent) {
 
         when (event) {
@@ -72,8 +71,6 @@ class SignUpViewModel:ViewModel() {
                 Log.d("Firebase ", "Inside_compltelistner  ")
                 Log.d("Firebase ", "is successfull =${it.isSuccessful} ")
                 signUpInProgress.value=false
-
-
                 if (it.isSuccessful){
                     //todo -->navigate to home screen
                     Log.d("register_success","register success ")
@@ -107,13 +104,22 @@ class SignUpViewModel:ViewModel() {
                 logInProgress.value=true
                 if (task.isSuccessful) {
                     Log.d("login_success","LogIn successful ")
-                    _loginSuccess.value = true
                     logInProgress.value=false
                     navigateToHomeScreen= true
                 } else {
                     errorMessage = "Login failed: ${task.exception?.message}"
+
                 }
             }
+    }
+
+    fun signOut() {
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            // User is logged in, sign them out
+            FirebaseAuth.getInstance().signOut()
+        }
     }
 
 }
