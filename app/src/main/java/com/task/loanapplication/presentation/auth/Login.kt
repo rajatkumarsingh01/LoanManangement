@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -36,21 +37,20 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.task.loanapplication.R
 import com.task.loanapplication.data.util.UIEvent
-import com.task.loanapplication.domain.MainViewModel
 import com.task.loanapplication.domain.SignUpViewModel
 
 @Composable
 fun LoginScreen(
     signUpViewModel: SignUpViewModel = viewModel(),
-     viewModel: MainViewModel,
     onRegisterClick: () -> Unit,
 ) {
+    val localContext= LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White)
-            .padding(16.dp)
+            .padding(10.dp)
 
         ,
         verticalArrangement = Arrangement.Center,
@@ -64,38 +64,32 @@ fun LoginScreen(
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.applogo),
+                painter = painterResource(id = R.drawable.loanicon),
                 contentDescription = "App Logo",
-                modifier = Modifier.size(90.dp) // Adjust size as needed
+                modifier = Modifier.size(50.dp) // Adjust size as needed
             )
             Column {
                 Text(
-                    text = "Saudagar Trading & Company",
+                    text = "Fincorp Loan Solutions",
                     textAlign = TextAlign.Center,
                     color = Color(0xFF008000),
                     fontWeight = FontWeight(300),
                     style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    maxLines = 1,
+                    modifier = Modifier.padding(bottom = 10.dp, start = 6.dp)
                 )
                 Text(
-                    text = "Helping the Needy",
+                    text = "Helping the Needy...",
                     textAlign = TextAlign.Center,
                     color = Color(0xFF008000),
-                    fontWeight = FontWeight(700),
-                    fontSize = 18.sp,
+                    fontWeight = FontWeight(600),
+                    fontSize = 16.sp,
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 10.dp, start = 18.dp)
+                    modifier = Modifier.padding(bottom = 10.dp, start = 6.dp)
                 )
             }
         }
               Spacer(modifier = Modifier.height(20.dp))
-
-        Image(
-            painter = painterResource(id = R.drawable.loanicon),
-            contentDescription = "Image",
-            modifier = Modifier.size(120.dp)
-        )
-
 
         // Username Field
         MyTextField(
@@ -113,12 +107,10 @@ fun LoginScreen(
             labelValue = stringResource(id = R.string.password),
             imageVector = Icons.Default.Lock,
             onTextSelected = {
-                signUpViewModel.onEvent(UIEvent.passwordChanged(it))
+               signUpViewModel.onEvent(UIEvent.passwordChanged(it))
             },
         )
-
         Spacer(modifier = Modifier.height(78.dp))
-
         // Login Button
         Button(
             onClick = {
@@ -126,7 +118,7 @@ fun LoginScreen(
             },
             modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor =   Color(0xFF008000)),
-            border = BorderStroke(2.dp, color = Color.Gray)
+            border = BorderStroke(2.dp, color = Color.Gray),
         ) {
             Text(text = "Login",
                 style = TextStyle(
@@ -135,8 +127,6 @@ fun LoginScreen(
                     fontWeight = FontWeight.Bold // C
                 )
             )
-
-
         }
 
         if (signUpViewModel.logInProgress.value){
@@ -162,8 +152,9 @@ fun LoginScreen(
 
 }
 
+
 @Preview
 @Composable
 private fun  PreviewLoginScreen() {
-    LoginScreen(signUpViewModel = SignUpViewModel(), viewModel = MainViewModel(), onRegisterClick = {})
+    LoginScreen(signUpViewModel = SignUpViewModel(), onRegisterClick = {})
 }

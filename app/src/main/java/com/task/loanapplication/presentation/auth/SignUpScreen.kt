@@ -72,7 +72,7 @@ fun SignUpScreen(
             text = "Please SignUp Here",
             textAlign = TextAlign.Center,
             color = Color(0xFF008000),
-            fontWeight = FontWeight(450),
+            fontWeight = FontWeight(600),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 24.dp)
         )

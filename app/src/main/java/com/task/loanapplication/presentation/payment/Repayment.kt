@@ -186,9 +186,9 @@ fun sendNotification(context: Context) {
     }
     // Build the notification
     val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-        .setContentTitle("Saudagar Trading & Company ")
+        .setContentTitle("Fincorp Loan Solutions")
         .setContentText("Your loan repayment has been confirmed.")
-        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setSmallIcon(R.drawable.loanicon)
     // You can add more configurations like actions, intent, etc.
     // Show the notification
     notificationManager.notify(NOTIFICATION_ID, builder.build())

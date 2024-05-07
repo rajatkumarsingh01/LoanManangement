@@ -18,8 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.task.loanapplication.data.util.RepaymentEntry
 
 @Composable
@@ -33,7 +36,13 @@ fun RepaymentScheduleScreen(repaymentSchedule: List<RepaymentEntry>, onNextClick
                     modifier = Modifier.weight(0.4f),
                     onClick = onNextClick
                 ) {
-                    Text(text = "Next")
+                    Text(text = "Next",
+                        style = TextStyle(
+                            fontSize = 18.sp, // Change font size
+                            color = Color.White, // Change text color
+                            fontWeight = FontWeight.Bold // C
+                        )
+                    )
                 }
             }
         }
@@ -51,6 +60,7 @@ fun RepaymentScheduleScreen(repaymentSchedule: List<RepaymentEntry>, onNextClick
             Text(
                 text = "Repayment Schedule",
                 style = MaterialTheme.typography.headlineSmall,
+                color = Color(0xFF008000),
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 

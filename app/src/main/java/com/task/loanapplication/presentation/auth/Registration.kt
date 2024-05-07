@@ -262,7 +262,7 @@ fun RegistrationScreen(
             Text(text = "Submit",
                 style = TextStyle(
                     fontSize = 18.sp, // Change font size
-                    color = Color.Black, // Change text color
+                    color = Color.White, // Change text color
                     fontWeight = FontWeight.Bold))
         }
 

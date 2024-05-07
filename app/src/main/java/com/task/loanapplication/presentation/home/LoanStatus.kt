@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -34,7 +36,12 @@ fun LoanDetailsScreen(
             onClick = { onDownloadLoanAgreementClick() },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            Text(text = "Download Loan Agreement")
+            Text(text = "Download Loan Agreement",
+                style = TextStyle(
+                    fontSize = 18.sp, // Change font size
+                    color = Color(0xFF008000), // Change text color
+                    fontWeight = FontWeight.Bold)
+                )
         }
     }
 }

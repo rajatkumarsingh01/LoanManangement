@@ -61,6 +61,7 @@ fun UploadDocumentsScreen(
     var bankingStatementUri by remember { mutableStateOf<Uri?>(null) }
     var licenseUri by remember { mutableStateOf<Uri?>(null) }
     var electricBillUri by remember { mutableStateOf<Uri?>(null) }
+    var rentalAgreementUri by remember { mutableStateOf<(Uri)?> (null)}
 
     Scaffold(
         bottomBar = {
@@ -79,13 +80,15 @@ fun UploadDocumentsScreen(
                                 viewModel.uploadDocument("BankingStatement", bankingStatementUri)
                                 viewModel.uploadDocument("License", licenseUri)
                                 viewModel.uploadDocument("ElectricBill", electricBillUri)
+                                viewModel.uploadDocument("RentalAgreement",rentalAgreementUri)
                                 onUploadComplete()
                                 showToast(localContext, "Documents uploaded successfully")
                             }else{
                                 showToast(localContext, "Please upload all documents")
                             }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(bottom = 16.dp)
                     ,
                     colors = ButtonDefaults.buttonColors(containerColor =Color(0xFF008000))

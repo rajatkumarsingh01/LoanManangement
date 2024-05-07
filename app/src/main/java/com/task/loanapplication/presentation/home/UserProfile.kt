@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.task.loanapplication.domain.MainViewModel
 
@@ -29,9 +30,9 @@ fun UserProfileScreen(viewModel: MainViewModel) {
         topBar = {
             TopAppBar(
                 title = {   Text(
-                    text = "Register User Details",
+                    text = "Hey, Welcome Back ! ",
                     textAlign = TextAlign.Center,
-                    color = Color.Green,
+                    color = Color(0xFF008000),
                     fontWeight = FontWeight(500),
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier.padding(bottom = 18.dp)
@@ -76,4 +77,10 @@ fun ProfileDetail(label: String, value: String) {
         Text(text = label, style = MaterialTheme.typography.labelLarge)
         Text(text = value, style = MaterialTheme.typography.bodyLarge)
     }
+}
+
+@Preview
+@Composable
+private fun PreviewUserProfileScreen() {
+    UserProfileScreen(viewModel = MainViewModel())
 }
